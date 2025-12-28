@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Store MIS Form</title>
+</head>
+<body>
+  <h2>Store MIS Data Entry</h2>
+  <form id="misForm">
+    <label>Branch:</label>
+    <select name="branch" required>
+      <option value="">Select Branch</option>
+      <option value="Hyper">Hyper</option>
+      <option value="EPR">EPR</option>
+      <option value="BVKS Furniture">BVKS Furniture</option>
+      <option value="Fancy">Fancy</option>
+      <option value="FootWears">FootWears</option>
+      <option value="Furnitures">Furnitures</option>
+      <option value="Plastic">Plastic</option>
+      <option value="Vessels">Vessels</option>
+    </select>
+    <br><br>
+    
+    <label>Report Date:</label>
+    <input type="date" name="reportDate" required>
+    <br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="response"></p>
+
+  <script>
+    const form = document.getElementById('misForm');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        branch: form.branch.value,
+        reportDate: form.reportDate.value
+      };
+      
+      fetch("https://script.google.com/macros/s/AKfycbz5Q1g6jK5xl1cKRSHkMONf-M4mozPfC1MVGM-JAT5xQHcV0DOlGOiJ8NW0PQ0NBjhG/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        document.getElementById('response').innerText = "Submitted Successfully!";
+        form.reset();
+      })
+      .catch(err => console.error(err));
+    });
+  </script>
+</body>
+</html>
